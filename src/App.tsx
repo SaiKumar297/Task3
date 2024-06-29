@@ -1,26 +1,31 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import { Container, Grid, Paper } from '@mui/material';
+import UserList from './components/UserList';
+import UserDetails from './components/UserDetails';
+import { User } from './types/User';
+import './styles.css';
 
-function App() {
+const App: React.FC = () => {
+  const [selectedUser, setSelectedUser] = useState<User | null>(null);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Container className="mt-8">
+      <Grid container spacing={3} direction="column">
+        <Grid item>
+          <Paper className="p-4">
+            <UserList onSelectUser={setSelectedUser} />
+          </Paper>
+        </Grid>
+        {selectedUser && (
+          <Grid item>
+            <Paper className="p-4">
+              <UserDetails user={selectedUser} />
+            </Paper>
+          </Grid>
+        )}
+      </Grid>
+    </Container>
   );
-}
+};
 
 export default App;
